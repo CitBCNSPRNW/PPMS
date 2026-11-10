@@ -2,88 +2,211 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
   <title>ระบบกำกับติดตามแผนงาน/โครงการ (PPMS) - วพบ.สวรรค์ประชารักษ์ นครสวรรค์</title>
   
-  <!-- Favicon & Open Graph (พรีวิวสวยงามเวลาแชร์ใน LINE / Facebook) -->
-  <link rel="icon" href="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop">
+  <!-- System Versioning: v2.18.1 | Build 2026.11.03 (Fullscreen iFrame Masking) -->
+  <meta name="version" content="v2.18.1">
+  <meta name="build" content="2026.11.03">
+  <meta name="author" content="งานนโยบายและแผน ร่วมกับ ศูนย์เทคโนโลยีสารสนเทศ (CitCentre) วพบ.สวรรค์ประชารักษ์ นครสวรรค์">
+  <meta name="theme-color" content="#f97316">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PPMS กำกับติดตามแผนงานโครงการ">
+
+  <!-- SEO & Social Open Graph Meta Tags (LINE / Facebook) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://citbcnsprnw.github.io/PPMS/">
   <meta property="og:title" content="ระบบกำกับติดตามแผนงาน/โครงการ (PPMS)">
   <meta property="og:description" content="วิทยาลัยพยาบาลบรมราชชนนี สวรรค์ประชารักษ์ นครสวรรค์ คณะพยาบาลศาสตร์ สถาบันพระบรมราชชนก">
   <meta property="og:image" content="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop">
 
-  <!-- Meta Refresh Redirect (ทันที 0 วินาที) -->
-  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbxr5r8cSARk39-8JplTrjC_eqKHoBHgdVOc7EIUOOi1R2cqAH3835J8PqUD43zUISmyFA/exec">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ระบบกำกับติดตามแผนงาน/โครงการ (PPMS)">
+  <meta name="twitter:description" content="วิทยาลัยพยาบาลบรมราชชนนี สวรรค์ประชารักษ์ นครสวรรค์">
+  <meta name="twitter:image" content="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop">
 
-  <!-- สไตล์ Splash Loading โทนสถาบัน ไม่ให้หน้าจอขาวโล่ง -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop">
+  <link rel="apple-touch-icon" href="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop">
+
+  <!-- Google Font: Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      height: 100vh;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f8fafc;
+      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Preloader Layer โทนส้มสถาบัน */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #ffffff 0%, #fff7ed 100%);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
-    .card {
-      background: #ffffff;
-      padding: 36px 32px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      text-align: center;
-      max-width: 380px;
-      width: 90%;
+    #preloader.loaded {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
-    .logo {
-      width: 80px;
-      height: 80px;
+    .logo-container {
+      position: relative;
+      margin-bottom: 22px;
+    }
+    .logo-img {
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
-      box-shadow: 0 4px 14px rgba(37,99,235,0.25);
-      margin-bottom: 16px;
       object-fit: cover;
+      box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.35);
+      background: #ffffff;
+      padding: 6px;
+      position: relative;
+      z-index: 2;
     }
-    .title {
-      font-size: 1.15rem;
-      font-weight: bold;
-      color: #1e3a8a;
+    .logo-halo {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, rgba(249, 115, 22, 0) 70%);
+      animation: pulse-halo 2.5s infinite ease-in-out;
+      z-index: 1;
+    }
+    @keyframes pulse-halo {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.22); opacity: 0.25; }
+    }
+    .badge-code {
+      display: inline-block;
+      padding: 3px 14px;
+      border-radius: 999px;
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      border: 1px solid #fed7aa;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #9a3412;
+      letter-spacing: 0.4px;
       margin-bottom: 6px;
+      text-align: center;
     }
-    .sub {
-      font-size: 0.85rem;
-      color: #64748b;
+    .brand-subtitle {
+      font-size: 0.94rem;
+      color: #475569;
       margin-bottom: 24px;
+      font-weight: 400;
+      text-align: center;
       line-height: 1.4;
     }
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 3.5px solid #e2e8f0;
-      border-top-color: #2563eb;
+    .spinner-ring {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 3.5px solid #ffedd5;
       border-radius: 50%;
+      border-top-color: #ea580c;
       animation: spin 0.8s linear infinite;
-      margin: 0 auto 14px auto;
+      margin-bottom: 14px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .redirect-msg {
-      font-size: 0.85rem;
-      color: #3b82f6;
-      font-weight: 500;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .status-text {
+      font-size: 0.90rem;
+      color: #ea580c;
+      font-weight: 600;
+    }
+
+    /* Fullscreen iFrame Masking (ไม่เปลี่ยน URL) */
+    #ppmsFrame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      z-index: 1;
+      display: block;
     }
   </style>
-
-  <!-- JavaScript Instant Redirect -->
-  <script>
-    window.location.replace("https://script.google.com/macros/s/AKfycbxr5r8cSARk39-8JplTrjC_eqKHoBHgdVOc7EIUOOi1R2cqAH3835J8PqUD43zUISmyFA/exec");
-  </script>
 </head>
 <body>
-  <div class="card">
-    <img src="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop" alt="Logo" class="logo">
-    <div class="title">ระบบกำกับติดตามแผนงาน/โครงการ</div>
-    <div class="sub">วิทยาลัยพยาบาลบรมราชชนนี สวรรค์ประชารักษ์ นครสวรรค์</div>
-    <div class="spinner"></div>
-    <div class="redirect-msg">กำลังนำท่านเข้าสู่ระบบ PPMS...</div>
+
+  <!-- Premium Preloader โทนส้มสถาบัน -->
+  <div id="preloader">
+    <div class="logo-container">
+      <div class="logo-halo"></div>
+      <img src="https://lh5.googleusercontent.com/d/1tDVKF6qFEl7_avxewudlClYsk9qkrgop" alt="BCNSPRNW Logo" class="logo-img">
+    </div>
+    <div>
+      <span class="badge-code">PPMS &bull; OFFICIAL PORTAL</span>
+    </div>
+    <div class="brand-title">ระบบกำกับติดตามแผนงาน/โครงการ (PPMS)</div>
+    <div class="brand-subtitle">วิทยาลัยพยาบาลบรมราชชนนี สวรรค์ประชารักษ์ นครสวรรค์<br>คณะพยาบาลศาสตร์ สถาบันพระบรมราชชนก</div>
+    <div class="spinner-ring"></div>
+    <div class="status-text">กำลังเชื่อมต่อระบบ กรุณารอสักครู่...</div>
+    <div style="margin-top: 20px; font-size: 0.74rem; color: #94a3b8; letter-spacing: 0.3px;">
+      v2.18.1 &bull; Build 2026.11.03
+    </div>
   </div>
+
+  <!-- Google Apps Script Web App Fullscreen Frame -->
+  <iframe 
+    id="ppmsFrame" 
+    src="https://script.google.com/macros/s/AKfycbxr5r8cSARk39-8JplTrjC_eqKHoBHgdVOc7EIUOOi1R2cqAH3835J8PqUD43zUISmyFA/exec"
+    allow="camera; microphone; geolocation; fullscreen; clipboard-read; clipboard-write"
+    onload="hidePreloader()">
+  </iframe>
+
+  <script>
+    function hidePreloader() {
+      var loader = document.getElementById('preloader');
+      if (loader && !loader.classList.contains('loaded')) {
+        setTimeout(function() {
+          loader.classList.add('loaded');
+        }, 400);
+      }
+    }
+
+    // Safety timeout: ซ่อน preloader ภายใน 3.5 วินาทีหาก event onload เกิดความล่าช้า
+    setTimeout(function() {
+      hidePreloader();
+    }, 3500);
+  </script>
+
 </body>
 </html>
